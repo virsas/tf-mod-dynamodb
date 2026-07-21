@@ -108,3 +108,19 @@ variable "ddb_replicas" {
   }))
   default = []
 }
+
+variable "ddb_stream_enabled" {
+  description = "Enables DynamoDB Streams for the table."
+  type        = bool
+  default     = false
+}
+
+variable "ddb_stream_view_type" {
+  description = "The view type for the DynamoDB Stream. Valid values are 'NEW_IMAGE', 'OLD_IMAGE', 'NEW_AND_OLD_IMAGES', or 'KEYS_ONLY'."
+  type        = string
+  default     = null
+  validation {
+    condition     = var.ddb_stream_view_type == null || contains(["NEW_IMAGE", "OLD_IMAGE", "NEW_AND_OLD_IMAGES", "KEYS_ONLY"], var.ddb_stream_view_type)
+    error_message = "Invalid value for 'ddb_stream_view_type'. Must be one of: 'NEW_IMAGE', 'OLD_IMAGE', 'NEW_AND_OLD_IMAGES', 'KEYS_ONLY'."
+  }
+}

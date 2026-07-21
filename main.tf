@@ -68,4 +68,7 @@ resource "aws_dynamodb_table" "vss" {
       region_name = replica.value.region_name
     }
   }
+
+  stream_enabled   = var.ddb_stream_enabled
+  stream_view_type  = var.ddb_stream_view_type
 }
