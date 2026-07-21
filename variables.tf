@@ -123,7 +123,7 @@ variable "ddb_stream_view_type" {
   validation {
     condition = var.ddb_stream_view_type == null || contains(
       ["NEW_IMAGE", "OLD_IMAGE", "NEW_AND_OLD_IMAGES", "KEYS_ONLY"],
-      coalesce(var.ddb_stream_view_type, "")
+      try(var.ddb_stream_view_type, "")
     )
     error_message = "Invalid value for 'ddb_stream_view_type'. Must be one of: 'NEW_IMAGE', 'OLD_IMAGE', 'NEW_AND_OLD_IMAGES', 'KEYS_ONLY'."
   }
