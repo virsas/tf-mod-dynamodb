@@ -119,8 +119,12 @@ variable "ddb_stream_view_type" {
   description = "The view type for the DynamoDB Stream. Valid values are 'NEW_IMAGE', 'OLD_IMAGE', 'NEW_AND_OLD_IMAGES', or 'KEYS_ONLY'."
   type        = string
   default     = null
+
   validation {
-    condition     = var.ddb_stream_view_type == null || contains(["NEW_IMAGE", "OLD_IMAGE", "NEW_AND_OLD_IMAGES", "KEYS_ONLY"], var.ddb_stream_view_type)
+    condition = var.ddb_stream_view_type == null || contains(
+      ["NEW_IMAGE", "OLD_IMAGE", "NEW_AND_OLD_IMAGES", "KEYS_ONLY"],
+      coalesce(var.ddb_stream_view_type, "")
+    )
     error_message = "Invalid value for 'ddb_stream_view_type'. Must be one of: 'NEW_IMAGE', 'OLD_IMAGE', 'NEW_AND_OLD_IMAGES', 'KEYS_ONLY'."
   }
 }
